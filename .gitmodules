@@ -1,0 +1,6 @@
+[submodule "libs/RakNet"]
+	path = libs/RakNet
+	url = https://github.com/Krum-SSFM/RakNet.git
+[submodule "libs/CppBinaryStream"]
+	path = libs/CppBinaryStream
+	url = https://github.com/vp817/CppBinaryStream.git
