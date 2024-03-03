@@ -31,13 +31,13 @@ add_all_libs_as_sub_dir()
 
 target_include_directories(Krum PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${LIBS_DIRECTORY}/CppBinaryStream/include
-    ${LIBS_DIRECTORY}/RakNet/include
-    ${LIBS_DIRECTORY}/stduuid/include
+	${LIBS_DIRECTORY}/CppBinaryStream/include
+	${LIBS_DIRECTORY}/RakNet/include
+	${LIBS_DIRECTORY}/stduuid/include
 )
 
 target_link_libraries(Krum PRIVATE
-    BinaryStream
-    RakNetLibStatic
+	BinaryStream
+	RakNetLibStatic
 	stduuid
 )
