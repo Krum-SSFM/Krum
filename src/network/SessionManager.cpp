@@ -15,49 +15,48 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <Krum/network/protocol/PacketManager.hpp>
+#pragma once
 
-namespace Krum::network::protocol
+#include <Krum/network/SessionManager.hpp>
+
+namespace Krum::network
 {
-    PacketManager::PacketManager()
+    bool SessionManager::has(std::string address)
     {
-        this->add(new packets::LoginPacket(Binary::Buffer::allocateZero(), 0));
+        return this->list.find(address) != this->list.end();
     }
 
-    bool PacketManager::has(protocol::packet_identifier_t id)
+    RakNet::SystemAddress SessionManager::get(std::string address)
     {
-        return this->list.find(id) != this->list.end();
-    }
-
-    BasePacket *PacketManager::get(protocol::packet_identifier_t id)
-    {
-        if (!this->has(id))
+        if (!this->has(address))
         {
             return nullptr;
         }
 
-        return this->list.at(id);
+        return this->list.at(address);
     }
 
-    bool PacketManager::add(BasePacket *packet)
+    bool SessionManager::add(RakNet::SystemAddress address)
     {
-        if (this->has(packet->getId()))
+        auto str_address = std::string(address.ToString(true));
+
+        if (this->has(str_address))
         {
             return false;
         }
 
-        this->list.insert({packet->getId(), packet});
+        this->list.insert({str_address, address});
         return true;
     }
 
-    bool PacketManager::remove(protocol::packet_identifier_t id)
+    bool SessionManager::remove(std::string address)
     {
-        if (!this->has(id))
+        if (!this->has(address))
         {
             return false;
         }
 
-        this->list.erase(id);
+        this->list.erase(address);
         return true;
     }
 }

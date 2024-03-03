@@ -15,15 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#pragma once
+#include <Krum/misc/MinecraftBinaryStream.hpp>
+#include <iostream>
 
-namespace Krum::player {
-    class Player
+namespace Krum::misc
+{
+    MinecraftBinaryStream::MinecraftBinaryStream(Binary::Buffer *buffer, std::size_t position)
+        : BinaryStreamMod(buffer, position)
     {
-    private:
-        /* data */
-    public:
-        Player(/* args */);
-        ~Player();
-    };
+    }
+
+    void MinecraftBinaryStream::writeUUID(const uuids::uuid &value)
+    {
+        this->getBuffer()->writeAligned(const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(value.as_bytes().data())), value.as_bytes().size());
+    }
+
+    uuids::uuid MinecraftBinaryStream::readUUID()
+    {
+        uuids::uuid::value_type bytes[16] = {};
+
+        std::memcpy(bytes, this->readAligned(16)->getBinary(), 16);
+
+        return uuids::uuid(std::begin(bytes), std::end(bytes));
+    }
 }

@@ -25,6 +25,11 @@
 #include <cstdint>
 #include <BinaryStream/BinaryStream.hpp>
 #include <Krum/network/protocol/PacketManager.hpp>
+#include <Krum/network/SessionManager.hpp>
+#include <Krum/player/Player.hpp>
+#include <Krum/player/PlayerManager.hpp>
+// #include <Krum/thread/ThreadManager.hpp>
+#include <Krum/network/protocol/packets/LoginPacket.hpp>
 
 namespace Krum
 {
@@ -37,9 +42,11 @@ namespace Krum
         RakNet::RakPeerInterface *peer;
         network::protocol::PacketManager *packet_manager;
         commands::CommandManager *command_manager;
+        network::SessionManager *session_manager;
+        player::PlayerManager *player_manager;
+        // thread::ThreadManager *thread_manager;
 
     public:
-
         Server(const std::string &ip, std::uint16_t port, std::uint16_t max_players);
 
         ~Server();

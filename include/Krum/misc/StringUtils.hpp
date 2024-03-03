@@ -34,4 +34,12 @@ namespace Krum::misc
 
         static bool contains(std::string base, std::string extra);
     };
+
+    struct StringComparator
+    {
+        bool operator()(const std::string &lhs, const std::string &rhs) const
+        {
+            return lhs < rhs;
+        }
+    };
 }

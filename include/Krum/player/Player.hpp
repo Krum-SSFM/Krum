@@ -17,24 +17,25 @@
 
 #pragma once
 
-#include <Krum/misc/MinecraftBinaryStream.hpp>
-#include "PacketIdentifiers.hpp"
+#include <RakNet/RakNetTypes.h>
+#include <Krum/misc/Macros.hpp>
+#include <string>
+#include <RakNet/RakPeerInterface.h>
 
-namespace Krum::network::protocol
+namespace Krum::player
 {
-    class BasePacket : public misc::MinecraftBinaryStream
+    class Player
     {
+    private:
+        std::string real_name;
+        RakNet::SystemAddress address;
+        RakNet::RakPeerInterface *peer;
+
     public:
-        BasePacket(Binary::Buffer *buffer, std::size_t position);
+        Player(std::string real_name, RakNet::SystemAddress address, RakNet::RakPeerInterface *peer);
+        // ~Player();
 
-        virtual packet_identifier_t getId() const = 0;
-
-        virtual void deserialize();
-        virtual void deserializeHeader();
-        virtual void deserializeBody() = 0;
-
-        virtual void serialize();
-        virtual void serializeHeader();
-        virtual void serializeBody() = 0;
+        ADD_GETTER(RealName, real_name)
+        ADD_GETTER(Address, address)
     };
 }

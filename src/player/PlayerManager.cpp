@@ -15,49 +15,48 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <Krum/network/protocol/PacketManager.hpp>
+#pragma once
 
-namespace Krum::network::protocol
+#include <Krum/player/PlayerManager.hpp>
+
+namespace Krum::player
 {
-    PacketManager::PacketManager()
+    bool PlayerManager::has(std::string real_name)
     {
-        this->add(new packets::LoginPacket(Binary::Buffer::allocateZero(), 0));
+        return this->list.find(real_name) != this->list.end();
     }
 
-    bool PacketManager::has(protocol::packet_identifier_t id)
+    Player *PlayerManager::get(std::string real_name)
     {
-        return this->list.find(id) != this->list.end();
-    }
-
-    BasePacket *PacketManager::get(protocol::packet_identifier_t id)
-    {
-        if (!this->has(id))
+        if (!this->has(real_name))
         {
             return nullptr;
         }
 
-        return this->list.at(id);
+        return this->list.at(real_name);
     }
 
-    bool PacketManager::add(BasePacket *packet)
+    bool PlayerManager::add(Player *player)
     {
-        if (this->has(packet->getId()))
+        auto real_name = std::string(player->getRealName());
+
+        if (this->has(real_name))
         {
             return false;
         }
 
-        this->list.insert({packet->getId(), packet});
+        this->list.insert({real_name, player});
         return true;
     }
 
-    bool PacketManager::remove(protocol::packet_identifier_t id)
+    bool PlayerManager::remove(std::string real_name)
     {
-        if (!this->has(id))
+        if (!this->has(real_name))
         {
             return false;
         }
 
-        this->list.erase(id);
+        this->list.erase(real_name);
         return true;
     }
 }

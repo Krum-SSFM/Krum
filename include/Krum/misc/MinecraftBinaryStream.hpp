@@ -17,24 +17,21 @@
 
 #pragma once
 
-#include <Krum/misc/MinecraftBinaryStream.hpp>
-#include "PacketIdentifiers.hpp"
+#include "BinaryStreamMod.hpp"
+#include <string>
+#include <cstdint>
+#include "StringUtils.hpp"
+#include <uuid.h>
 
-namespace Krum::network::protocol
+namespace Krum::misc
 {
-    class BasePacket : public misc::MinecraftBinaryStream
+    class MinecraftBinaryStream : public BinaryStreamMod
     {
     public:
-        BasePacket(Binary::Buffer *buffer, std::size_t position);
+        MinecraftBinaryStream(Binary::Buffer *buffer, std::size_t position);
 
-        virtual packet_identifier_t getId() const = 0;
+        void writeUUID(const uuids::uuid &value);
 
-        virtual void deserialize();
-        virtual void deserializeHeader();
-        virtual void deserializeBody() = 0;
-
-        virtual void serialize();
-        virtual void serializeHeader();
-        virtual void serializeBody() = 0;
+        uuids::uuid readUUID();
     };
 }

@@ -15,26 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#pragma once
+#include <Krum/misc/BinaryStreamMod.hpp>
 
-#include <Krum/misc/MinecraftBinaryStream.hpp>
-#include "PacketIdentifiers.hpp"
-
-namespace Krum::network::protocol
+namespace Krum::misc
 {
-    class BasePacket : public misc::MinecraftBinaryStream
+    BinaryStreamMod::BinaryStreamMod(Binary::Buffer *buffer, std::size_t position)
+        : BinaryStream(buffer, position)
     {
-    public:
-        BasePacket(Binary::Buffer *buffer, std::size_t position);
+    }
 
-        virtual packet_identifier_t getId() const = 0;
+    BinaryStreamMod::~BinaryStreamMod()
+    {
+        BinaryStream::~BinaryStream();
+    }
 
-        virtual void deserialize();
-        virtual void deserializeHeader();
-        virtual void deserializeBody() = 0;
-
-        virtual void serialize();
-        virtual void serializeHeader();
-        virtual void serializeBody() = 0;
-    };
+    void BinaryStreamMod::setBuffer(Binary::Buffer *buffer)
+    {
+        delete this->buffer;
+        this->buffer = buffer;
+    }
 }

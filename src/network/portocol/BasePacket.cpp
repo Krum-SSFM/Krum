@@ -20,47 +20,34 @@
 
 namespace Krum::network::protocol
 {
-    BasePacket::BasePacket(Binary::Buffer *buffer, size_t position)
-        : BinaryStream::BinaryStream(buffer, position)
+    BasePacket::BasePacket(Binary::Buffer *buffer, std::size_t position)
+        : misc::MinecraftBinaryStream(buffer, position)
     {
     }
 
-    BasePacket::~BasePacket()
+    void BasePacket::deserialize()
     {
-        BinaryStream::~BinaryStream();
+        this->deserializeHeader();
+        this->deserializeBody();
     }
 
-    void BasePacket::deserializie()
+    void BasePacket::deserializeHeader() // todo do an arg to add if header byte required
     {
-        if (this->getPosition() != 0)
-        {
-            this->rewind();
-        }
-        this->deserializieHeader();
-        this->deserializieBody();
-    }
-
-    void BasePacket::deserializieHeader()
-    {
-        if (this->read<std::uint8_t>() != this->getId())
+        if (static_cast<packet_identifier_t>(this->read<std::uint8_t>() - protocol::OLDV_PACKET_HEADER_BYTE) != this->getId())
         {
             std::cout << "Invalid packet id" << std::endl;
             // exit(0);
         }
     }
 
-    void BasePacket::serializie()
+    void BasePacket::serialize()
     {
-        if (this->getBuffer()->getPosition() != 0)
-        {
-            this->reset(true);
-        }
-        this->serializieHeader();
-        this->serializieBody();
+        this->serializeHeader();
+        this->serializeBody();
     }
 
-    void BasePacket::serializieHeader()
+    void BasePacket::serializeHeader() // todo do an arg to add if header byte required
     {
-        this->write<std::uint8_t>(this->getId());
+        this->write<std::uint8_t>(static_cast<std::uint8_t>(this->getId()) +  protocol::OLDV_PACKET_HEADER_BYTE);
     }
 }

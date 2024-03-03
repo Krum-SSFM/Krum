@@ -19,7 +19,9 @@
 
 namespace Krum::network::protocol
 { 
-    enum PacketIdentifiers : std::uint8_t
+    static constexpr std::uint8_t OLDV_PACKET_HEADER_BYTE = 0x8e;
+
+    enum class PacketIdentifiers : std::uint8_t
     {
         NONE,
         LOGIN,

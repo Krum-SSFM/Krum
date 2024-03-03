@@ -17,24 +17,25 @@
 
 #pragma once
 
-#include <Krum/misc/MinecraftBinaryStream.hpp>
-#include "PacketIdentifiers.hpp"
+#include <RakNet/RakNetTypes.h>
+#include <map>
+#include <string>
+#include <Krum/misc/StringUtils.hpp>
 
-namespace Krum::network::protocol
+namespace Krum::network
 {
-    class BasePacket : public misc::MinecraftBinaryStream
+    class SessionManager
     {
+    private:
+        std::map<std::string, RakNet::SystemAddress, misc::StringComparator> list;
+
     public:
-        BasePacket(Binary::Buffer *buffer, std::size_t position);
+        bool has(std::string address);
 
-        virtual packet_identifier_t getId() const = 0;
+        RakNet::SystemAddress get(std::string address);
 
-        virtual void deserialize();
-        virtual void deserializeHeader();
-        virtual void deserializeBody() = 0;
+        bool add(RakNet::SystemAddress address);
 
-        virtual void serialize();
-        virtual void serializeHeader();
-        virtual void serializeBody() = 0;
+        bool remove(std::string address);
     };
 }

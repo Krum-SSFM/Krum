@@ -17,24 +17,25 @@
 
 #pragma once
 
-#include <Krum/misc/MinecraftBinaryStream.hpp>
-#include "PacketIdentifiers.hpp"
+#include "Player.hpp"
+#include <map>
+#include <string>
+#include <Krum/misc/StringUtils.hpp>
 
-namespace Krum::network::protocol
+namespace Krum::player
 {
-    class BasePacket : public misc::MinecraftBinaryStream
+    class PlayerManager
     {
+    private:
+        std::map<std::string, Player *, misc::StringComparator> list;
+
     public:
-        BasePacket(Binary::Buffer *buffer, std::size_t position);
+        bool has(std::string real_name);
 
-        virtual packet_identifier_t getId() const = 0;
+        Player *get(std::string real_name);
 
-        virtual void deserialize();
-        virtual void deserializeHeader();
-        virtual void deserializeBody() = 0;
+        bool add(Player *player);
 
-        virtual void serialize();
-        virtual void serializeHeader();
-        virtual void serializeBody() = 0;
+        bool remove(std::string real_name);
     };
 }

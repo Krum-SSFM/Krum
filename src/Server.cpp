@@ -33,6 +33,9 @@ namespace Krum
 
         this->packet_manager = new network::protocol::PacketManager();
         this->command_manager = new commands::CommandManager();
+        this->session_manager = new network::SessionManager();
+        this->player_manager = new player::PlayerManager();
+        // this->thread_manager = new thread::ThreadManager();
     }
 
     Server::~Server()
@@ -46,7 +49,9 @@ namespace Krum
         this->peer->Shutdown(0, 0);
         delete this->packet_manager;
         delete this->command_manager;
-        // todo delete this->thread_manager;
+        delete this->session_manager;
+        delete this->player_manager;
+        // delete this->thread_manager;
     }
 
     void Server::start()
@@ -72,9 +77,10 @@ namespace Krum
 
         std::cout << "Server running" << std::endl;
 
-        if (this->peer->Startup(this->max_players, &RakNet::SocketDescriptor(this->port, this->ip.c_str()), 1) != RakNet::RAKNET_STARTED)
+        RakNet::StartupResult r = this->peer->Startup(this->max_players, &RakNet::SocketDescriptor(this->port, this->ip.c_str() == "0.0.0.0" ? 0 : this->ip.c_str()), 1);
+        if (r != RakNet::RAKNET_STARTED)
         {
-            std::cout << "Unable to startup raknet." << std::endl;
+            std::cout << "Unable to startup raknet. Error code: " << r << std::endl;
             return;
         }
 
@@ -83,18 +89,61 @@ namespace Krum
             for (RakNet::Packet *packet = this->peer->Receive(); packet; this->peer->DeallocatePacket(packet), packet = this->peer->Receive())
             {
                 std::uint8_t id = packet->data[0];
+                auto address = packet->systemAddress.ToString(true);
 
                 if (id == ID_NEW_INCOMING_CONNECTION)
                 {
-                    std::cout << "New incoming connection: " << packet->systemAddress.ToString(true) << std::endl;
+                    if (!this->session_manager->add(packet->systemAddress))
+                        continue;
+
+                    std::cout << "New incoming connection: " << address << std::endl;
                 }
                 else if (id == ID_DISCONNECTION_NOTIFICATION)
                 {
-                    std::cout << "Disconnection: " << packet->systemAddress.ToString(true) << std::endl;
+                    if (!this->session_manager->remove(address))
+                        continue;
+
+                    std::cout << "Disconnection: " << address << std::endl;
                 }
-                else if (id >= ID_USER_PACKET_ENUM)
+                else if (id > ID_USER_PACKET_ENUM)
                 {
-                    std::cout << "Game packet id: " << std::to_string(id) << std::endl;
+                    if (!this->session_manager->has(address))
+                        continue;
+
+                    if (id == network::protocol::OLDV_PACKET_HEADER_BYTE)
+                    {
+                        auto stream = new Binary::BinaryStream(new Binary::Buffer(packet->data, packet->length), 1);
+
+                        auto game_packet_id = static_cast<network::protocol::packet_identifier_t>(stream->read<std::uint8_t>() - network::protocol::OLDV_PACKET_HEADER_BYTE);
+                        if (!this->packet_manager->has(game_packet_id))
+                        {
+                            std::cout << "PacketId not registered in manager" << std::endl;
+                            continue;
+                        }
+
+                        auto game_packet = this->packet_manager->get(game_packet_id);
+                        game_packet->setBuffer(stream->getBuffer());
+                        game_packet->setPosition(1);
+                        game_packet->deserialize();
+
+                        if (game_packet->getId() == network::protocol::PacketIdentifiers::LOGIN)
+                        {
+                            auto login = static_cast<network::protocol::packets::LoginPacket *>(game_packet);
+
+                            std::cout << "Login packet fields: " << std::endl;
+                            std::cout << login->getRealName() << std::endl;
+                            std::cout << login->getProtocolVersion() << std::endl;
+                            std::cout << login->getSkinId() << std::endl;
+                            std::cout << uuids::to_string(login->getSkinUUID()) << std::endl;
+                            std::cout << login->getServerAddress() << std::endl;
+                            std::cout << login->getField7() << std::endl;
+                            std::cout << login->getSkinName() << std::endl;
+                            std::cout << login->getField9() << std::endl;
+
+                            // todo rewrite the system for the 3rd time
+                            // this->player_manager->add(new player::Player(login->getRealName(), packet->systemAddress, this->peer));
+                        }
+                    }
                 }
             }
         }

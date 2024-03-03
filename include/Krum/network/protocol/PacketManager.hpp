@@ -18,25 +18,25 @@
 #pragma once
 
 #include <map>
-#include <cstdint>
 #include "BasePacket.hpp"
+#include <Krum/network/protocol/packets/LoginPacket.hpp>
 
 namespace Krum::network::protocol
 {
     class PacketManager
     {
     private:
-        std::map<std::uint8_t, BasePacket *> list;
+        std::map<protocol::packet_identifier_t, BasePacket *> list;
 
     public:
         PacketManager();
 
-        bool has(std::uint8_t id);
+        bool has(protocol::packet_identifier_t id);
 
-        BasePacket *get(std::uint8_t id);
+        BasePacket *get(protocol::packet_identifier_t id);
 
         bool add(BasePacket *packet);
 
-        bool remove(std::uint8_t id);
+        bool remove(protocol::packet_identifier_t id);
     };
 }
