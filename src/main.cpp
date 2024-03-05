@@ -24,22 +24,42 @@
 #include <csignal>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/async.h>
+#include <pugixml.hpp>
 
 namespace
 {
 	volatile std::sig_atomic_t g_signal_status;
 }
 
-int main(int argc, char **argv)
+int main()
 {
-	std::string ip = argv[1];
-	auto port = static_cast<std::uint16_t>(std::stoi(argv[2]));
+	pugi::xml_document properties;
 
-	auto server_logger = spdlog::stdout_color_mt("Server");
-	spdlog::set_default_logger(server_logger);
+	pugi::xml_parse_result result = properties.load_file("properties.xml");
+	if (!result)
+	{
+		std::cerr << "Unable to load properties.xml file" << std::endl;
+		return 1;
+	}
 
-	Krum::Server server(ip, port, 10);
+	auto krum_element = properties.child("Krum");
+
+	auto address_child = krum_element.child("Address");
+	auto motd_child = krum_element.child("Motd");
+
+	spdlog::init_thread_pool(8192, 1);
+
+	auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+	auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("server.log", 1048576, 3);
+    auto async_logger = std::make_shared<spdlog::async_logger>("Server", spdlog::sinks_init_list({console_sink, file_sink}), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
+
+    spdlog::set_default_logger(async_logger);
+
+    async_logger->flush_on(spdlog::level::info);
+
+	Krum::Server server(address_child.child("Interface").text().as_string(), address_child.child("Port").text().as_uint(), motd_child.child("MaxPlayers").text().as_uint());
 
 	std::signal(SIGINT, [](int signum)
 				{ g_signal_status = signum; });

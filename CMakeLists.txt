@@ -35,6 +35,7 @@ target_include_directories(Krum PRIVATE
 	${LIBS_DIRECTORY}/RakNet/include
 	${LIBS_DIRECTORY}/stduuid/include
 	${LIBS_DIRECTORY}/spdlog/include
+	${LIBS_DIRECTORY}/pugixml/src
 )
 
 target_link_libraries(Krum PRIVATE
@@ -42,4 +43,5 @@ target_link_libraries(Krum PRIVATE
 	RakNetLibStatic
 	stduuid
 	spdlog
+	pugixml
 )

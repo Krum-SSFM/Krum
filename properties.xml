@@ -1,0 +1,12 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<Krum>
+	<Address>
+		<Interface>0.0.0.0</Interface>
+		<Port>19132</Port>
+	</Address>
+	<Motd>
+		<FirstLine>Krum Server</FirstLine>
+		<SecondLine>World</SecondLine>
+		<MaxPlayers>10</MaxPlayers>
+	</Motd>
+</Krum>

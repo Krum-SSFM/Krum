@@ -30,3 +30,6 @@ Makefile
 # GCC/G++
 BinaryStreamTests
 libBinaryStream.a
+
+# Krum
+server.log
