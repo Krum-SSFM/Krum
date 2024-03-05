@@ -19,37 +19,37 @@
 
 namespace Krum::misc
 {
-    std::vector<std::string> StringUtils::split(const std::string &input, char delimiter)
-    {
-        std::vector<std::string> result;
-        std::stringstream ss(input);
-        std::string token;
+	std::vector<std::string> StringUtils::split(const std::string &input, char delimiter)
+	{
+		std::vector<std::string> result;
+		std::stringstream ss(input);
+		std::string token;
 
-        while (std::getline(ss, token, delimiter))
-        {
-            result.push_back(token);
-        }
+		while (std::getline(ss, token, delimiter))
+		{
+			result.push_back(token);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    std::string_view StringUtils::trim(std::string_view input)
-    {
-        while (!input.empty() && std::isspace(input.front()))
-        {
-            input.remove_prefix(1);
-        }
+	std::string_view StringUtils::trim(std::string_view input)
+	{
+		while (!input.empty() && std::isspace(input.front()))
+		{
+			input.remove_prefix(1);
+		}
 
-        while (!input.empty() && std::isspace(input.back()))
-        {
-            input.remove_suffix(1);
-        }
+		while (!input.empty() && std::isspace(input.back()))
+		{
+			input.remove_suffix(1);
+		}
 
-        return input;
-    }
+		return input;
+	}
 
-    bool StringUtils::contains(std::string base, std::string extra)
-    {
-        return base.find(extra.c_str()) != std::string::npos;
-    }
+	bool StringUtils::contains(std::string base, std::string extra)
+	{
+		return base.find(extra.c_str()) != std::string::npos;
+	}
 }

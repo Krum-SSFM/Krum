@@ -19,19 +19,19 @@
 
 namespace Krum::misc
 {
-    BinaryStreamMod::BinaryStreamMod(Binary::Buffer *buffer, std::size_t position)
-        : BinaryStream(buffer, position)
-    {
-    }
+	BinaryStreamMod::BinaryStreamMod(Binary::Buffer *buffer, std::size_t position)
+		: BinaryStream(buffer, position)
+	{
+	}
 
-    BinaryStreamMod::~BinaryStreamMod()
-    {
-        BinaryStream::~BinaryStream();
-    }
+	BinaryStreamMod::~BinaryStreamMod()
+	{
+		BinaryStream::~BinaryStream();
+	}
 
-    void BinaryStreamMod::setBuffer(Binary::Buffer *buffer)
-    {
-        delete this->buffer;
-        this->buffer = buffer;
-    }
+	void BinaryStreamMod::setBuffer(Binary::Buffer *buffer)
+	{
+		delete this->buffer;
+		this->buffer = buffer;
+	}
 }

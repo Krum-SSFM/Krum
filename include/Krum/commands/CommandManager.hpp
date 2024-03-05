@@ -27,24 +27,24 @@
 
 namespace Krum::commands
 {
-    class CommandManager
-    {
-    private:
-        std::map<std::string, Command *> list;
+	class CommandManager
+	{
+	private:
+		std::map<std::string, Command *> list;
 
-    public:
-        CommandManager();
+	public:
+		CommandManager();
 
-        bool has(std::string name);
+		bool has(std::string name);
 
-        Command *get(std::string name);
+		Command *get(std::string name);
 
-        bool add(Command *command);
+		bool add(Command *command);
 
-        bool remove(std::string name);
+		bool remove(std::string name);
 
-        bool executeCommand(const std::string &command);
+		bool executeCommand(const std::string &command);
 
-        ADD_GETTER(All, list)
-    };
+		ADD_GETTER(All, list)
+	};
 }

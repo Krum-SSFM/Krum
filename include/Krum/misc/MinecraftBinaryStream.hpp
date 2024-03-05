@@ -25,13 +25,13 @@
 
 namespace Krum::misc
 {
-    class MinecraftBinaryStream : public BinaryStreamMod
-    {
-    public:
-        MinecraftBinaryStream(Binary::Buffer *buffer, std::size_t position);
+	class MinecraftBinaryStream : public BinaryStreamMod
+	{
+	public:
+		MinecraftBinaryStream(Binary::Buffer *buffer, std::size_t position);
 
-        void writeUUID(const uuids::uuid &value);
+		void writeUUID(const uuids::uuid &value);
 
-        uuids::uuid readUUID();
-    };
+		uuids::uuid readUUID();
+	};
 }

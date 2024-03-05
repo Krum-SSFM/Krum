@@ -20,80 +20,80 @@
 
 namespace Krum::commands
 {
-    CommandManager::CommandManager()
-    {
-        this->add(new list::Help());
-        this->add(new list::Exit());
-    }
+	CommandManager::CommandManager()
+	{
+		this->add(new list::Help());
+		this->add(new list::Exit());
+	}
 
-    bool CommandManager::has(std::string name)
-    {
-        return this->list.find(name) != this->list.end();
-    }
+	bool CommandManager::has(std::string name)
+	{
+		return this->list.find(name) != this->list.end();
+	}
 
-    Command *CommandManager::get(std::string name)
-    {
-        if (!this->has(name))
-        {
-            return nullptr;
-        }
+	Command *CommandManager::get(std::string name)
+	{
+		if (!this->has(name))
+		{
+			return nullptr;
+		}
 
-        return this->list.at(name);
-    }
+		return this->list.at(name);
+	}
 
-    bool CommandManager::add(Command *command)
-    {
-        if (this->has(command->getName()))
-        {
-            return false;
-        }
+	bool CommandManager::add(Command *command)
+	{
+		if (this->has(command->getName()))
+		{
+			return false;
+		}
 
-        this->list.insert({command->getName(), command});
-        return true;
-    }
+		this->list.insert({command->getName(), command});
+		return true;
+	}
 
-    bool CommandManager::remove(std::string name)
-    {
-        if (!this->has(name))
-        {
-            return false;
-        }
+	bool CommandManager::remove(std::string name)
+	{
+		if (!this->has(name))
+		{
+			return false;
+		}
 
-        this->list.erase(name);
-        return true;
-    }
+		this->list.erase(name);
+		return true;
+	}
 
-    bool CommandManager::executeCommand(const std::string &command)
-    {
-        if (misc::StringUtils::trim(command) == "")
-        {
-            return true;
-        }
+	bool CommandManager::executeCommand(const std::string &command)
+	{
+		if (misc::StringUtils::trim(command) == "")
+		{
+			return true;
+		}
 
-        auto temp_cmd = std::string(command);
-        std::vector<std::string> arguments;
+		auto temp_cmd = std::string(command);
+		std::vector<std::string> arguments;
 
-        if (misc::StringUtils::contains(temp_cmd, " "))
-        {
-            auto command_parts = misc::StringUtils::split(command, ' ');
-            temp_cmd = command_parts.at(0);
-            command_parts.erase(command_parts.begin());
-            arguments = command_parts;
-        }
+		if (misc::StringUtils::contains(temp_cmd, " "))
+		{
+			auto command_parts = misc::StringUtils::split(command, ' ');
+			temp_cmd = command_parts.at(0);
+			command_parts.erase(command_parts.begin());
+			arguments = command_parts;
+		}
 
-        if (!this->has(temp_cmd))
-        {
-            return false;
-        }
+		if (!this->has(temp_cmd))
+		{
+			return false;
+		}
 
-        auto actual_command = this->get(temp_cmd);
+		auto actual_command = this->get(temp_cmd);
 
-        if (actual_command == nullptr)
-        {
-            return false;
-        }
+		if (actual_command == nullptr)
+		{
+			return false;
+		}
 
-        actual_command->handleExecution(temp_cmd, nullptr, arguments);
-        return true;
-    }
+		actual_command->handleExecution(temp_cmd, nullptr, arguments);
+		return true;
+	}
 }

@@ -22,19 +22,19 @@
 
 namespace Krum::network::protocol
 {
-    class BasePacket : public misc::MinecraftBinaryStream
-    {
-    public:
-        BasePacket(Binary::Buffer *buffer, std::size_t position);
+	class BasePacket : public misc::MinecraftBinaryStream
+	{
+	public:
+		BasePacket(Binary::Buffer *buffer, std::size_t position);
 
-        virtual packet_identifier_t getId() const = 0;
+		virtual packet_identifier_t getId() const = 0;
 
-        virtual void deserialize();
-        virtual void deserializeHeader();
-        virtual void deserializeBody() = 0;
+		virtual void deserialize();
+		virtual void deserializeHeader();
+		virtual void deserializeBody() = 0;
 
-        virtual void serialize();
-        virtual void serializeHeader();
-        virtual void serializeBody() = 0;
-    };
+		virtual void serialize();
+		virtual void serializeHeader();
+		virtual void serializeBody() = 0;
+	};
 }

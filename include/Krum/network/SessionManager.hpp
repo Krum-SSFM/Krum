@@ -24,18 +24,18 @@
 
 namespace Krum::network
 {
-    class SessionManager
-    {
-    private:
-        std::map<std::string, RakNet::SystemAddress, misc::StringComparator> list;
+	class SessionManager
+	{
+	private:
+		std::map<std::string, RakNet::SystemAddress, misc::StringComparator> list;
 
-    public:
-        bool has(std::string address);
+	public:
+		bool has(std::string address);
 
-        RakNet::SystemAddress get(std::string address);
+		RakNet::SystemAddress get(std::string address);
 
-        bool add(RakNet::SystemAddress address);
+		bool add(RakNet::SystemAddress address);
 
-        bool remove(std::string address);
-    };
+		bool remove(std::string address);
+	};
 }

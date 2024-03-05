@@ -21,14 +21,15 @@
 #include <cstdint>
 #include <Krum/commands/Command.hpp>
 #include <vector>
+#include <spdlog/spdlog.h>
 
 namespace Krum::commands::list
 {
-    class Exit : public Command
-    {
-    public:
-        Exit();
+	class Exit : public Command
+	{
+	public:
+		Exit();
 
-        void handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments) override;
-    };
+		void handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments) override;
+	};
 }

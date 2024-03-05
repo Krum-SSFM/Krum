@@ -24,18 +24,18 @@
 
 namespace Krum::player
 {
-    class PlayerManager
-    {
-    private:
-        std::map<std::string, Player *, misc::StringComparator> list;
+	class PlayerManager
+	{
+	private:
+		std::map<std::string, Player *, misc::StringComparator> list;
 
-    public:
-        bool has(std::string real_name);
+	public:
+		bool has(std::string real_name);
 
-        Player *get(std::string real_name);
+		Player *get(std::string real_name);
 
-        bool add(Player *player);
+		bool add(Player *player);
 
-        bool remove(std::string real_name);
-    };
+		bool remove(std::string real_name);
+	};
 }

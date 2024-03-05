@@ -19,8 +19,8 @@
 
 namespace Krum::commands
 {
-    Command::Command(const std::string &name, const std::string &description, std::uint8_t permissionLevel)
-        : name(name), description(description), permissionLevel(permissionLevel)
-    {
-    }
+	Command::Command(const std::string &name, const std::string &description, std::uint8_t permissionLevel)
+		: name(name), description(description), permissionLevel(permissionLevel)
+	{
+	}
 }

@@ -22,13 +22,13 @@
 
 namespace Krum::commands::list
 {
-    Help::Help()
-        : Command::Command("help", "Display list of commands.", 0)
-    {
-    }
+	Help::Help()
+		: Command::Command("help", "Display list of commands.", 0)
+	{
+	}
 
-    void Help::handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments)
-    {
-        std::cout << "Help command list: (0/0)" << std::endl;
-    }
+	void Help::handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments)
+	{
+		spdlog::info("Help command list: (0/0)");
+	}
 }

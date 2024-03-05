@@ -34,10 +34,12 @@ target_include_directories(Krum PRIVATE
 	${LIBS_DIRECTORY}/CppBinaryStream/include
 	${LIBS_DIRECTORY}/RakNet/include
 	${LIBS_DIRECTORY}/stduuid/include
+	${LIBS_DIRECTORY}/spdlog/include
 )
 
 target_link_libraries(Krum PRIVATE
 	BinaryStream
 	RakNetLibStatic
 	stduuid
+	spdlog
 )

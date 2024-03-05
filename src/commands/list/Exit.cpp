@@ -22,13 +22,13 @@
 
 namespace Krum::commands::list
 {
-    Exit::Exit()
-        : Command::Command("exit", "Exit the program.", 0)
-    {
-    }
+	Exit::Exit()
+		: Command::Command("exit", "Exit the program.", 0)
+	{
+	}
 
-    void Exit::handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments)
-    {
-        std::cout << "Error: Unable to exit program, reason: todo" << std::endl;
-    }
+	void Exit::handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments)
+	{
+		spdlog::info("Error: Unable to exit program, reason: todo");
+	}
 }

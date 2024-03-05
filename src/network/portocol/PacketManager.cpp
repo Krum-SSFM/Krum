@@ -19,45 +19,45 @@
 
 namespace Krum::network::protocol
 {
-    PacketManager::PacketManager()
-    {
-        this->add(new packets::LoginPacket(Binary::Buffer::allocateZero(), 0));
-    }
+	PacketManager::PacketManager()
+	{
+		this->add(new packets::LoginPacket(Binary::Buffer::allocateZero(), 0));
+	}
 
-    bool PacketManager::has(protocol::packet_identifier_t id)
-    {
-        return this->list.find(id) != this->list.end();
-    }
+	bool PacketManager::has(protocol::packet_identifier_t id)
+	{
+		return this->list.find(id) != this->list.end();
+	}
 
-    BasePacket *PacketManager::get(protocol::packet_identifier_t id)
-    {
-        if (!this->has(id))
-        {
-            return nullptr;
-        }
+	BasePacket *PacketManager::get(protocol::packet_identifier_t id)
+	{
+		if (!this->has(id))
+		{
+			return nullptr;
+		}
 
-        return this->list.at(id);
-    }
+		return this->list.at(id);
+	}
 
-    bool PacketManager::add(BasePacket *packet)
-    {
-        if (this->has(packet->getId()))
-        {
-            return false;
-        }
+	bool PacketManager::add(BasePacket *packet)
+	{
+		if (this->has(packet->getId()))
+		{
+			return false;
+		}
 
-        this->list.insert({packet->getId(), packet});
-        return true;
-    }
+		this->list.insert({packet->getId(), packet});
+		return true;
+	}
 
-    bool PacketManager::remove(protocol::packet_identifier_t id)
-    {
-        if (!this->has(id))
-        {
-            return false;
-        }
+	bool PacketManager::remove(protocol::packet_identifier_t id)
+	{
+		if (!this->has(id))
+		{
+			return false;
+		}
 
-        this->list.erase(id);
-        return true;
-    }
+		this->list.erase(id);
+		return true;
+	}
 }

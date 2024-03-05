@@ -28,31 +28,34 @@
 #include <Krum/network/SessionManager.hpp>
 #include <Krum/player/Player.hpp>
 #include <Krum/player/PlayerManager.hpp>
-// #include <Krum/thread/ThreadManager.hpp>
 #include <Krum/network/protocol/packets/LoginPacket.hpp>
+#include <Krum/misc/Macros.hpp>
+#include <spdlog/spdlog.h>
 
 namespace Krum
 {
-    class Server
-    {
-    private:
-        std::string ip;
-        std::uint16_t port;
-        std::uint16_t max_players;
-        RakNet::RakPeerInterface *peer;
-        network::protocol::PacketManager *packet_manager;
-        commands::CommandManager *command_manager;
-        network::SessionManager *session_manager;
-        player::PlayerManager *player_manager;
-        // thread::ThreadManager *thread_manager;
+	class Server
+	{
+	private:
+		std::string ip;
+		std::uint16_t port;
+		std::uint16_t max_players;
+		RakNet::RakPeerInterface *peer;
+		network::protocol::PacketManager *packet_manager;
+		commands::CommandManager *command_manager;
+		network::SessionManager *session_manager;
+		player::PlayerManager *player_manager;
 
-    public:
-        Server(const std::string &ip, std::uint16_t port, std::uint16_t max_players);
+	public:
+		Server(const std::string &ip, std::uint16_t port, std::uint16_t max_players);
 
-        ~Server();
+		~Server();
 
-        void shutdown();
+		ADD_GETTER(CommandManager, command_manager);
+		ADD_GETTER(PlayerManager, player_manager);
 
-        void start();
-    };
+		void shutdown();
+
+		void start();
+	};
 }

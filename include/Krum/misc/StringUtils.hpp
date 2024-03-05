@@ -24,22 +24,22 @@
 
 namespace Krum::misc
 {
-    class StringUtils
-    {
+	class StringUtils
+	{
 
-    public:
-        static std::vector<std::string> split(const std::string &input, char delimiter);
+	public:
+		static std::vector<std::string> split(const std::string &input, char delimiter);
 
-        static std::string_view trim(std::string_view input);
+		static std::string_view trim(std::string_view input);
 
-        static bool contains(std::string base, std::string extra);
-    };
+		static bool contains(std::string base, std::string extra);
+	};
 
-    struct StringComparator
-    {
-        bool operator()(const std::string &lhs, const std::string &rhs) const
-        {
-            return lhs < rhs;
-        }
-    };
+	struct StringComparator
+	{
+		bool operator()(const std::string &lhs, const std::string &rhs) const
+		{
+			return lhs < rhs;
+		}
+	};
 }

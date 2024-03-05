@@ -18,52 +18,51 @@
 #pragma once
 
 #include <Krum/network/protocol/packets/LoginPacket.hpp>
-#include <iostream>
 
 namespace Krum::network::protocol::packets
 {
-    LoginPacket::LoginPacket(Binary::Buffer *buffer, std::size_t position)
-        : BasePacket(buffer, position)
-    {
-    }
+	LoginPacket::LoginPacket(Binary::Buffer *buffer, std::size_t position)
+		: BasePacket(buffer, position)
+	{
+	}
 
-    packet_identifier_t LoginPacket::getId() const
-    {
-        return PacketIdentifiers::LOGIN;
-    }
+	packet_identifier_t LoginPacket::getId() const
+	{
+		return PacketIdentifiers::LOGIN;
+	}
 
-    void LoginPacket::deserializeBody()
-    {
-        this->real_name = this->readString<std::uint16_t>();
-        this->ignoreBytes(sizeof(std::uint32_t)); // used to check if is network order, by reading a uint32 from stream then checking if it's equals to 0x2d, but it's useless for me
-        this->protocol_version = this->read<std::uint32_t>();
+	void LoginPacket::deserializeBody()
+	{
+		this->real_name = this->readString<std::uint16_t>();
+		this->ignoreBytes(sizeof(std::uint32_t)); // used to check if is network order, by reading a uint32 from stream then checking if it's equals to 0x2d, but it's useless for me
+		this->protocol_version = this->read<std::uint32_t>();
 
-        if (this->protocol_version == 0x2d)
-        {
-            this->skin_id = this->read<std::uint64_t>();
-            this->skin_uuid = this->readUUID();
-            this->server_address = this->readString<std::uint16_t>();
-            this->field_7 = this->readString<std::uint16_t>();
-            this->skin_name = this->readString<std::uint16_t>();
-            this->field_9 = this->readString<std::uint16_t>();
-        }
-    }
+		if (this->protocol_version == 0x2d)
+		{
+			this->skin_id = this->read<std::uint64_t>();
+			this->skin_uuid = this->readUUID();
+			this->server_address = this->readString<std::uint16_t>();
+			this->field_7 = this->readString<std::uint16_t>();
+			this->skin_name = this->readString<std::uint16_t>();
+			this->field_9 = this->readString<std::uint16_t>();
+		}
+	}
 
-    void LoginPacket::serializeBody()
-    {
-        this->writeString<std::uint16_t>(this->real_name);
+	void LoginPacket::serializeBody()
+	{
+		this->writeString<std::uint16_t>(this->real_name);
 
-        this->write<std::uint32_t>(0x2d);
-        this->write<std::uint32_t>(this->protocol_version);
+		this->write<std::uint32_t>(0x2d);
+		this->write<std::uint32_t>(this->protocol_version);
 
-        if (this->protocol_version == 0x2d)
-        {
-            this->write<std::uint64_t>(this->skin_id);
-            this->writeUUID(this->skin_uuid);
-            this->writeString<std::uint16_t>(this->server_address);
-            this->writeString<std::uint16_t>(this->field_7);
-            this->writeString<std::uint16_t>(this->skin_name);
-            this->writeString<std::uint16_t>(this->field_9);
-        }
-    }
+		if (this->protocol_version == 0x2d)
+		{
+			this->write<std::uint64_t>(this->skin_id);
+			this->writeUUID(this->skin_uuid);
+			this->writeString<std::uint16_t>(this->server_address);
+			this->writeString<std::uint16_t>(this->field_7);
+			this->writeString<std::uint16_t>(this->skin_name);
+			this->writeString<std::uint16_t>(this->field_9);
+		}
+	}
 }

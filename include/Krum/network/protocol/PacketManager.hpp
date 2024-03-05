@@ -23,20 +23,20 @@
 
 namespace Krum::network::protocol
 {
-    class PacketManager
-    {
-    private:
-        std::map<protocol::packet_identifier_t, BasePacket *> list;
+	class PacketManager
+	{
+	private:
+		std::map<protocol::packet_identifier_t, BasePacket *> list;
 
-    public:
-        PacketManager();
+	public:
+		PacketManager();
 
-        bool has(protocol::packet_identifier_t id);
+		bool has(protocol::packet_identifier_t id);
 
-        BasePacket *get(protocol::packet_identifier_t id);
+		BasePacket *get(protocol::packet_identifier_t id);
 
-        bool add(BasePacket *packet);
+		bool add(BasePacket *packet);
 
-        bool remove(protocol::packet_identifier_t id);
-    };
+		bool remove(protocol::packet_identifier_t id);
+	};
 }

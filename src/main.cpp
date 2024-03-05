@@ -22,24 +22,30 @@
 #include <map>
 #include <Krum/commands/CommandManager.hpp>
 #include <csignal>
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/async.h>
 
 namespace
 {
-    volatile std::sig_atomic_t g_signal_status;
+	volatile std::sig_atomic_t g_signal_status;
 }
 
 int main(int argc, char **argv)
 {
-    std::string ip = argv[1];
-    auto port = static_cast<std::uint16_t>(std::stoi(argv[2]));
+	std::string ip = argv[1];
+	auto port = static_cast<std::uint16_t>(std::stoi(argv[2]));
 
-    Krum::Server server(ip, port, 10);
+	auto server_logger = spdlog::stdout_color_mt("Server");
+	spdlog::set_default_logger(server_logger);
 
-    std::signal(SIGINT, [](int signum)
-                { g_signal_status = signum; });
+	Krum::Server server(ip, port, 10);
 
-    std::thread signal_thread([&server]()
-                              {
+	std::signal(SIGINT, [](int signum)
+				{ g_signal_status = signum; });
+
+	std::thread signal_thread([&server]()
+							  {
         while (true)
         {
             if (g_signal_status != NULL)
@@ -48,12 +54,12 @@ int main(int argc, char **argv)
             }
         }
 
-        std::cout << "Server killed!" << std::endl;
+        spdlog::info("Server killed!");
         server.shutdown();
         exit(g_signal_status); });
 
-    signal_thread.detach();
-    server.start();
+	signal_thread.detach();
+	server.start();
 
-    return 0;
+	return 0;
 }

@@ -24,18 +24,18 @@
 
 namespace Krum::player
 {
-    class Player
-    {
-    private:
-        std::string real_name;
-        RakNet::SystemAddress address;
-        RakNet::RakPeerInterface *peer;
+	class Player
+	{
+	private:
+		std::string real_name;
+		RakNet::SystemAddress address;
+		RakNet::RakPeerInterface *peer;
 
-    public:
-        Player(std::string real_name, RakNet::SystemAddress address, RakNet::RakPeerInterface *peer);
-        // ~Player();
+	public:
+		Player(std::string real_name, RakNet::SystemAddress address, RakNet::RakPeerInterface *peer);
+		// ~Player();
 
-        ADD_GETTER(RealName, real_name)
-        ADD_GETTER(Address, address)
-    };
+		ADD_GETTER(RealName, real_name)
+		ADD_GETTER(Address, address)
+	};
 }

@@ -21,42 +21,42 @@
 
 namespace Krum::network
 {
-    bool SessionManager::has(std::string address)
-    {
-        return this->list.find(address) != this->list.end();
-    }
+	bool SessionManager::has(std::string address)
+	{
+		return this->list.find(address) != this->list.end();
+	}
 
-    RakNet::SystemAddress SessionManager::get(std::string address)
-    {
-        if (!this->has(address))
-        {
-            return nullptr;
-        }
+	RakNet::SystemAddress SessionManager::get(std::string address)
+	{
+		if (!this->has(address))
+		{
+			return nullptr;
+		}
 
-        return this->list.at(address);
-    }
+		return this->list.at(address);
+	}
 
-    bool SessionManager::add(RakNet::SystemAddress address)
-    {
-        auto str_address = std::string(address.ToString(true));
+	bool SessionManager::add(RakNet::SystemAddress address)
+	{
+		auto str_address = std::string(address.ToString(true));
 
-        if (this->has(str_address))
-        {
-            return false;
-        }
+		if (this->has(str_address))
+		{
+			return false;
+		}
 
-        this->list.insert({str_address, address});
-        return true;
-    }
+		this->list.insert({str_address, address});
+		return true;
+	}
 
-    bool SessionManager::remove(std::string address)
-    {
-        if (!this->has(address))
-        {
-            return false;
-        }
+	bool SessionManager::remove(std::string address)
+	{
+		if (!this->has(address))
+		{
+			return false;
+		}
 
-        this->list.erase(address);
-        return true;
-    }
+		this->list.erase(address);
+		return true;
+	}
 }

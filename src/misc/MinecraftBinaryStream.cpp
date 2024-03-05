@@ -20,22 +20,22 @@
 
 namespace Krum::misc
 {
-    MinecraftBinaryStream::MinecraftBinaryStream(Binary::Buffer *buffer, std::size_t position)
-        : BinaryStreamMod(buffer, position)
-    {
-    }
+	MinecraftBinaryStream::MinecraftBinaryStream(Binary::Buffer *buffer, std::size_t position)
+		: BinaryStreamMod(buffer, position)
+	{
+	}
 
-    void MinecraftBinaryStream::writeUUID(const uuids::uuid &value)
-    {
-        this->getBuffer()->writeAligned(const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(value.as_bytes().data())), value.as_bytes().size());
-    }
+	void MinecraftBinaryStream::writeUUID(const uuids::uuid &value)
+	{
+		this->getBuffer()->writeAligned(const_cast<std::uint8_t *>(reinterpret_cast<const std::uint8_t *>(value.as_bytes().data())), value.as_bytes().size());
+	}
 
-    uuids::uuid MinecraftBinaryStream::readUUID()
-    {
-        uuids::uuid::value_type bytes[16] = {};
+	uuids::uuid MinecraftBinaryStream::readUUID()
+	{
+		uuids::uuid::value_type bytes[16] = {};
 
-        std::memcpy(bytes, this->readAligned(16)->getBinary(), 16);
+		std::memcpy(bytes, this->readAligned(16)->getBinary(), 16);
 
-        return uuids::uuid(std::begin(bytes), std::end(bytes));
-    }
+		return uuids::uuid(std::begin(bytes), std::end(bytes));
+	}
 }

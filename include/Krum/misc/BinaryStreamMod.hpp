@@ -21,13 +21,13 @@
 
 namespace Krum::misc
 {
-    class BinaryStreamMod : public Binary::BinaryStream
-    {
-    public:
-        BinaryStreamMod(Binary::Buffer *buffer, std::size_t position);
+	class BinaryStreamMod : public Binary::BinaryStream
+	{
+	public:
+		BinaryStreamMod(Binary::Buffer *buffer, std::size_t position);
 
-        virtual ~BinaryStreamMod();
+		virtual ~BinaryStreamMod();
 
-        virtual void setBuffer(Binary::Buffer *buffer);
-    };
+		virtual void setBuffer(Binary::Buffer *buffer);
+	};
 }

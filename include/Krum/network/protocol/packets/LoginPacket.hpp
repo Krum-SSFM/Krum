@@ -26,34 +26,34 @@
 
 namespace Krum::network::protocol::packets
 {
-    class LoginPacket : public BasePacket
-    {
-    private:
-        std::string real_name;
-        std::uint32_t protocol_version;
-        std::uint64_t skin_id;
-        uuids::uuid skin_uuid;
-        std::string server_address;
-        std::string field_7;
-        std::string skin_name;
-        std::string field_9;
+	class LoginPacket : public BasePacket
+	{
+	private:
+		std::string real_name;
+		std::uint32_t protocol_version;
+		std::uint64_t skin_id;
+		uuids::uuid skin_uuid;
+		std::string server_address;
+		std::string field_7;
+		std::string skin_name;
+		std::string field_9;
 
-    public:
-        LoginPacket(Binary::Buffer *buffer, std::size_t position);
+	public:
+		LoginPacket(Binary::Buffer *buffer, std::size_t position);
 
-        packet_identifier_t getId() const override;
+		packet_identifier_t getId() const override;
 
-        ADD_GETTER_AND_SETTER(RealName, real_name);
-        ADD_GETTER_AND_SETTER(ProtocolVersion, protocol_version);
-        ADD_GETTER_AND_SETTER(SkinId, skin_id);
-        ADD_GETTER_AND_SETTER(SkinUUID, skin_uuid);
-        ADD_GETTER_AND_SETTER(ServerAddress, server_address);
-        ADD_GETTER_AND_SETTER(Field7, field_7);
-        ADD_GETTER_AND_SETTER(SkinName, skin_name);
-        ADD_GETTER_AND_SETTER(Field9, field_9);
+		ADD_GETTER_AND_SETTER(RealName, real_name);
+		ADD_GETTER_AND_SETTER(ProtocolVersion, protocol_version);
+		ADD_GETTER_AND_SETTER(SkinId, skin_id);
+		ADD_GETTER_AND_SETTER(SkinUUID, skin_uuid);
+		ADD_GETTER_AND_SETTER(ServerAddress, server_address);
+		ADD_GETTER_AND_SETTER(Field7, field_7);
+		ADD_GETTER_AND_SETTER(SkinName, skin_name);
+		ADD_GETTER_AND_SETTER(Field9, field_9);
 
-        void deserializeBody() override;
+		void deserializeBody() override;
 
-        void serializeBody() override;
-    };
+		void serializeBody() override;
+	};
 }

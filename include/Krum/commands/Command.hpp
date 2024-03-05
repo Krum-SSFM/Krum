@@ -24,20 +24,20 @@
 
 namespace Krum::commands
 {
-    class Command
-    {
-    private:
-        std::string name;
-        std::string description;
-        std::uint8_t permissionLevel;
+	class Command
+	{
+	private:
+		std::string name;
+		std::string description;
+		std::uint8_t permissionLevel;
 
-    public:
-        Command(const std::string &name, const std::string &description, std::uint8_t permissionLevel);
+	public:
+		Command(const std::string &name, const std::string &description, std::uint8_t permissionLevel);
 
-        virtual ADD_GETTER(Name, name);
-        virtual ADD_GETTER(Description, description);
-        virtual ADD_GETTER(PermissionLevel, permissionLevel);
+		virtual ADD_GETTER(Name, name);
+		virtual ADD_GETTER(Description, description);
+		virtual ADD_GETTER(PermissionLevel, permissionLevel);
 
-        virtual void handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments) = 0;
-    };
+		virtual void handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments) = 0;
+	};
 }
