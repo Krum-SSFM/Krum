@@ -53,11 +53,11 @@ int main()
 
 	auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 	auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("server.log", 1048576, 3);
-    auto async_logger = std::make_shared<spdlog::async_logger>("Server", spdlog::sinks_init_list({console_sink, file_sink}), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
+	auto async_logger = std::make_shared<spdlog::async_logger>("Server", spdlog::sinks_init_list({console_sink, file_sink}), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
 
-    spdlog::set_default_logger(async_logger);
+	spdlog::set_default_logger(async_logger);
 
-    async_logger->flush_on(spdlog::level::info);
+	async_logger->flush_on(spdlog::level::info);
 
 	Krum::Server server(address_child.child("Interface").text().as_string(), address_child.child("Port").text().as_uint(), motd_child.child("MaxPlayers").text().as_uint());
 
