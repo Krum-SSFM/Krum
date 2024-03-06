@@ -21,8 +21,8 @@
 
 namespace Krum::player
 {
-	Player::Player(std::string real_name, RakNet::SystemAddress address, RakNet::RakPeerInterface *peer)
-		: real_name(real_name), address(address), peer(peer)
+	Player::Player(std::string real_name, RakNet::SystemAddress address)
+		: real_name(real_name), address(address)
 	{
 	}
 }

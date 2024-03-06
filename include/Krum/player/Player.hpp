@@ -18,9 +18,7 @@
 #pragma once
 
 #include <RakNet/RakNetTypes.h>
-#include <Krum/misc/Macros.hpp>
 #include <string>
-#include <RakNet/RakPeerInterface.h>
 
 namespace Krum::player
 {
@@ -29,13 +27,12 @@ namespace Krum::player
 	private:
 		std::string real_name;
 		RakNet::SystemAddress address;
-		RakNet::RakPeerInterface *peer;
 
 	public:
-		Player(std::string real_name, RakNet::SystemAddress address, RakNet::RakPeerInterface *peer);
+		Player(std::string real_name, RakNet::SystemAddress address);
 		// ~Player();
 
-		ADD_GETTER(RealName, real_name)
-		ADD_GETTER(Address, address)
+		decltype(real_name) getRealName() { return this->real_name; };
+		decltype(address) getAddress() { return this->address; };
 	};
 }

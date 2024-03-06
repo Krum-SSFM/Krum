@@ -138,7 +138,6 @@ namespace Krum
 							spdlog::info(login->getSkinName());
 							spdlog::info(login->getField9());
 
-							// todo rewrite the system for the 3rd time
 							// this->player_manager->add(new player::Player(login->getRealName(), packet->systemAddress, this->peer));
 						}
 					}

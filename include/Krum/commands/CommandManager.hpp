@@ -20,7 +20,6 @@
 #include "Command.hpp"
 #include <map>
 #include <string>
-#include <Krum/misc/Macros.hpp>
 #include <Krum/misc/StringUtils.hpp>
 #include <Krum/commands/list/Help.hpp>
 #include <Krum/commands/list/Exit.hpp>
@@ -45,6 +44,6 @@ namespace Krum::commands
 
 		bool executeCommand(const std::string &command);
 
-		ADD_GETTER(All, list)
+		decltype(list) getAll() { return this->list; };
 	};
 }

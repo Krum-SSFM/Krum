@@ -29,7 +29,6 @@
 #include <Krum/player/Player.hpp>
 #include <Krum/player/PlayerManager.hpp>
 #include <Krum/network/protocol/packets/LoginPacket.hpp>
-#include <Krum/misc/Macros.hpp>
 #include <spdlog/spdlog.h>
 
 namespace Krum
@@ -51,8 +50,8 @@ namespace Krum
 
 		~Server();
 
-		ADD_GETTER(CommandManager, command_manager);
-		ADD_GETTER(PlayerManager, player_manager);
+		decltype(command_manager) getCommandManager() { return this->command_manager; };
+		decltype(player_manager) getPlayerManager() { return this->player_manager; };
 
 		void shutdown();
 

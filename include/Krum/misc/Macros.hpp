@@ -35,55 +35,6 @@
 	}
 #endif
 
-#ifndef ADD_GETTER
-#define ADD_GETTER(funcName, name) \
-	decltype(name) get##funcName() const { return this->##name; }
-#endif
-
-#ifndef ADD_GETTER_AV_CNSTV
-#define ADD_GETTER_AV_CNSTV(funcName, name) \
-	auto get##funcName() -> decltype(name) const { return this->##name; }
-#endif
-
-#ifndef ADD_GETTER_AV_NLV
-#define ADD_GETTER_AV_NLV(funcName, name) \
-	auto get##funcName() -> decltype(name) { return this->##name; }
-#endif
-
-#ifndef ADD_IS
-#define ADD_IS(funcName, name) \
-	decltype(name) is##funcName() const { return this->##name; }
-#endif
-
-#ifndef ADD_SETTER
-#define ADD_SETTER(funcName, name) \
-	void set##funcName(decltype(name) value) { this->##name = value; }
-#endif
-
-#ifndef ADD_GETTER_AND_SETTER
-#define ADD_GETTER_AND_SETTER(funcName, name) \
-	ADD_GETTER(funcName, name);               \
-	ADD_SETTER(funcName, name);
-#endif
-
-#ifndef ADD_GETTER_AV_CNSTV_AND_SETTER
-#define ADD_GETTER_AV_CNSTV_AND_SETTER(funcName, name) \
-	ADD_GETTER_AV_CNSTV(funcName, name);               \
-	ADD_SETTER(funcName, name);
-#endif
-
-#ifndef ADD_GETTER_AV_NLV_AND_SETTER
-#define ADD_GETTER_AV_NLV_AND_SETTER(funcName, name) \
-	ADD_GETTER_AV_NLV(funcName, name);               \
-	ADD_SETTER(funcName, name);
-#endif
-
-#ifndef ADD_IS_AND_SETTER
-#define ADD_IS_AND_SETTER(funcName, name) \
-	ADD_IS(funcName, name);               \
-	ADD_SETTER(funcName, name);
-#endif
-
 #ifndef GENERATE_RANDOM_UINT64
 #define GENERATE_RANDOM_UINT64(var)                              \
 	static std::random_device rd;                                \

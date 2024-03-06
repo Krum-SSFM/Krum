@@ -30,6 +30,6 @@ namespace Krum::commands::list
 	public:
 		Help();
 
-		void handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments) override;
+		void handleExecution(const std::string &command_name, void *source, std::vector<std::string> arguments) override;
 	};
 }

@@ -82,16 +82,12 @@ namespace Krum::commands
 		}
 
 		if (!this->has(temp_cmd))
-		{
 			return false;
-		}
 
 		auto actual_command = this->get(temp_cmd);
 
 		if (actual_command == nullptr)
-		{
 			return false;
-		}
 
 		actual_command->handleExecution(temp_cmd, nullptr, arguments);
 		return true;

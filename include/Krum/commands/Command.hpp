@@ -19,7 +19,6 @@
 
 #include <string>
 #include <cstdint>
-#include <Krum/misc/Macros.hpp>
 #include <vector>
 
 namespace Krum::commands
@@ -29,15 +28,15 @@ namespace Krum::commands
 	private:
 		std::string name;
 		std::string description;
-		std::uint8_t permissionLevel;
+		std::uint8_t permission_level;
 
 	public:
-		Command(const std::string &name, const std::string &description, std::uint8_t permissionLevel);
+		Command(const std::string &name, const std::string &description, std::uint8_t permission_level);
 
-		virtual ADD_GETTER(Name, name);
-		virtual ADD_GETTER(Description, description);
-		virtual ADD_GETTER(PermissionLevel, permissionLevel);
+		decltype(name) getName() { return this->name; };
+		decltype(description) getDescription() { return this->description; };
+		decltype(permission_level) getPermissionLevel() { return this->permission_level; };
 
-		virtual void handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments) = 0;
+		virtual void handleExecution(const std::string &command_name, void *source, std::vector<std::string> arguments) = 0;
 	};
 }

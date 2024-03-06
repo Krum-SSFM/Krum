@@ -27,7 +27,7 @@ namespace Krum::commands::list
 	{
 	}
 
-	void Help::handleExecution(const std::string &commandName, void *source, std::vector<std::string> arguments)
+	void Help::handleExecution(const std::string &command_name, void *source, std::vector<std::string> arguments)
 	{
 		spdlog::info("Help command list: (0/0)");
 	}
