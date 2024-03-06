@@ -75,8 +75,7 @@ namespace Krum
 
 		spdlog::info("Server running");
 
-		RakNet::SocketDescriptor descriptor(this->port, this->ip.c_str() == "0.0.0.0" ? 0 : this->ip.c_str());
-		RakNet::StartupResult r = this->peer->Startup(this->max_players, &descriptor, 1);
+		RakNet::StartupResult r = this->peer->Startup(this->max_players, &RakNet::SocketDescriptor(this->port, this->ip.c_str() == "0.0.0.0" ? 0 : this->ip.c_str()), 1);
 		if (r != RakNet::RAKNET_STARTED)
 		{
 			spdlog::info("Unable to startup raknet. Error code: {}", r);
