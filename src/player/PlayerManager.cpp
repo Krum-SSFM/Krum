@@ -21,42 +21,42 @@
 
 namespace Krum::player
 {
-	bool PlayerManager::has(std::string real_name)
+	bool PlayerManager::has(std::string address)
 	{
-		return this->list.find(real_name) != this->list.end();
+		return this->list.find(address) != this->list.end();
 	}
 
-	Player *PlayerManager::get(std::string real_name)
+	Player *PlayerManager::get(std::string address)
 	{
-		if (!this->has(real_name))
+		if (!this->has(address))
 		{
 			return nullptr;
 		}
 
-		return this->list.at(real_name);
+		return this->list.at(address);
 	}
 
 	bool PlayerManager::add(Player *player)
 	{
-		auto real_name = std::string(player->getRealName());
+		auto address = std::string(player->getAddress().ToString(true));
 
-		if (this->has(real_name))
+		if (this->has(address))
 		{
 			return false;
 		}
 
-		this->list.insert({real_name, player});
+		this->list.insert({address, player});
 		return true;
 	}
 
-	bool PlayerManager::remove(std::string real_name)
+	bool PlayerManager::remove(std::string address)
 	{
-		if (!this->has(real_name))
+		if (!this->has(address))
 		{
 			return false;
 		}
 
-		this->list.erase(real_name);
+		this->list.erase(address);
 		return true;
 	}
 }

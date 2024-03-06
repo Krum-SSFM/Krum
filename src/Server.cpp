@@ -33,7 +33,6 @@ namespace Krum
 
 		this->packet_manager = new network::protocol::PacketManager();
 		this->command_manager = new commands::CommandManager();
-		this->session_manager = new network::SessionManager();
 		this->player_manager = new player::PlayerManager();
 	}
 
@@ -48,7 +47,6 @@ namespace Krum
 		this->peer->Shutdown(1000, 0);
 		delete this->packet_manager;
 		delete this->command_manager;
-		delete this->session_manager;
 		delete this->player_manager;
 	}
 
@@ -92,21 +90,23 @@ namespace Krum
 
 				if (id == ID_NEW_INCOMING_CONNECTION)
 				{
-					if (!this->session_manager->add(packet->systemAddress))
+					if (!this->player_manager->add(new player::Player("", packet->systemAddress)))
 						continue;
 
 					spdlog::info("New incoming connection: {}", address);
 				}
 				else if (id == ID_DISCONNECTION_NOTIFICATION)
 				{
-					if (!this->session_manager->remove(address))
+					if (!this->player_manager->remove(address))
 						continue;
 
 					spdlog::info("Disconnection: {}", address);
 				}
 				else if (id > ID_USER_PACKET_ENUM)
 				{
-					if (!this->session_manager->has(address))
+					auto player = this->player_manager->get(address);
+
+					if (player == nullptr)
 						continue;
 
 					if (id == network::protocol::OLDV_PACKET_HEADER_BYTE)
@@ -139,7 +139,8 @@ namespace Krum
 							spdlog::info(login->getSkinName());
 							spdlog::info(login->getField9());
 
-							// this->player_manager->add(new player::Player(login->getRealName(), packet->systemAddress, this->peer));
+							player->setRealName(login->getRealName());
+							player->setProtocolVersion(login->getProtocolVersion());
 						}
 					}
 				}

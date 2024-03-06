@@ -33,9 +33,9 @@ namespace Krum::commands
 	public:
 		Command(const std::string &name, const std::string &description, std::uint8_t permission_level);
 
-		decltype(name) getName() { return this->name; };
-		decltype(description) getDescription() { return this->description; };
-		decltype(permission_level) getPermissionLevel() { return this->permission_level; };
+		decltype(name) getName() const { return this->name; };
+		decltype(description) getDescription() const { return this->description; };
+		decltype(permission_level) getPermissionLevel() const { return this->permission_level; };
 
 		virtual void handleExecution(const std::string &command_name, void *source, std::vector<std::string> arguments) = 0;
 	};

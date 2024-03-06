@@ -30,12 +30,12 @@ namespace Krum::player
 		std::map<std::string, Player *, misc::StringComparator> list;
 
 	public:
-		bool has(std::string real_name);
+		bool has(std::string address);
 
-		Player *get(std::string real_name);
+		Player *get(std::string address);
 
 		bool add(Player *player);
 
-		bool remove(std::string real_name);
+		bool remove(std::string address);
 	};
 }

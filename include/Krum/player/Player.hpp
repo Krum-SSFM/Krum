@@ -19,6 +19,7 @@
 
 #include <RakNet/RakNetTypes.h>
 #include <string>
+#include <cstdint>
 
 namespace Krum::player
 {
@@ -27,12 +28,17 @@ namespace Krum::player
 	private:
 		std::string real_name;
 		RakNet::SystemAddress address;
+		std::uint32_t protocol_version;
 
 	public:
 		Player(std::string real_name, RakNet::SystemAddress address);
 		// ~Player();
 
-		decltype(real_name) getRealName() { return this->real_name; };
-		decltype(address) getAddress() { return this->address; };
+		decltype(real_name) getRealName() const { return this->real_name; };
+		void setRealName(decltype(real_name) value) { this->real_name = value; };
+		decltype(protocol_version) getProtocolVersion() const { return this->protocol_version; };
+		void setProtocolVersion(decltype(protocol_version) value) { this->protocol_version = value; };
+
+		decltype(address) getAddress() const { return this->address; };
 	};
 }

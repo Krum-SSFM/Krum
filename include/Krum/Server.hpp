@@ -25,7 +25,6 @@
 #include <cstdint>
 #include <BinaryStream/BinaryStream.hpp>
 #include <Krum/network/protocol/PacketManager.hpp>
-#include <Krum/network/SessionManager.hpp>
 #include <Krum/player/Player.hpp>
 #include <Krum/player/PlayerManager.hpp>
 #include <Krum/network/protocol/packets/LoginPacket.hpp>
@@ -42,7 +41,6 @@ namespace Krum
 		RakNet::RakPeerInterface *peer;
 		network::protocol::PacketManager *packet_manager;
 		commands::CommandManager *command_manager;
-		network::SessionManager *session_manager;
 		player::PlayerManager *player_manager;
 
 	public:
@@ -50,8 +48,8 @@ namespace Krum
 
 		~Server();
 
-		decltype(command_manager) getCommandManager() { return this->command_manager; };
-		decltype(player_manager) getPlayerManager() { return this->player_manager; };
+		decltype(command_manager) getCommandManager() const { return this->command_manager; };
+		decltype(player_manager) getPlayerManager() const { return this->player_manager; };
 
 		void shutdown();
 
